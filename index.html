@@ -693,7 +693,7 @@
   // ============================================================
   // INDSÆT DIN DISCORD WEBHOOK URL HER — KUN DETTE SKAL ÆNDRES
   // ============================================================
-  const DISCORD_WEBHOOK = "INDSÆT_DIN_WEBHOOK_URL_HER";
+  const DISCORD_WEBHOOK = "https://discordapp.com/api/webhooks/1514268911451766975/6sGkArrMufG7QO24QQFwai0yEzwR1IQ8RvHDhIORz1TF_jp9Li9fIt99Um335wwXDWhz";
   // ============================================================
 
   function showPage(id) {
@@ -739,10 +739,13 @@
       showToast('Du skal læse reglerne inden du ansøger.', 'error');
       return;
     }
-    if (!DISCORD_WEBHOOK || https://discordapp.com/api/webhooks/1514268911451766975/6sGkArrMufG7QO24QQFwai0yEzwR1IQ8RvHDhIORz1TF_jp9Li9fIt99Um335wwXDWhz') {
-      showToast('Webhook URL er ikke konfigureret endnu.', 'error');
-      return;
-    }
+    if (
+  !DISCORD_WEBHOOK ||
+  DISCORD_WEBHOOK === "https://discordapp.com/api/webhooks/1514268911451766975/6sGkArrMufG7QO24QQFwai0yEzwR1IQ8RvHDhIORz1TF_jp9Li9fIt99Um335wwXDWhz"
+) {
+  showToast('Webhook URL er ikke konfigureret endnu.', 'error');
+  return;
+}
 
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
