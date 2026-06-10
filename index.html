@@ -53,7 +53,7 @@
   }
   .nav-logo span { color: var(--purple); }
 
-  .nav-links { display: flex; gap: 8px; }
+  .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
 
   .nav-btn {
     font-family: 'Exo 2', sans-serif;
@@ -112,6 +112,19 @@
     box-shadow: 0 0 60px rgba(123,47,255,0.5), 0 0 120px rgba(123,47,255,0.2);
     display: block;
     margin: 0 auto;
+  }
+
+  .logo-fallback {
+    display: none;
+    width: 200px; height: 200px;
+    border-radius: 20px;
+    background: var(--purple-dim);
+    border: 2px solid var(--border);
+    align-items: center; justify-content: center;
+    margin: 0 auto;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 40px; font-weight: 700;
+    color: var(--purple);
   }
 
   .hero-title {
@@ -402,8 +415,9 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="logo-container">
-    <img src="/mnt/user-data/uploads/1781098285976_image.png" alt="PurePVP Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-    <div style="display:none; width:200px;height:200px;border-radius:20px;background:var(--purple-dim);border:2px solid var(--border);display:none;align-items:center;justify-content:center;margin:0 auto;font-family:'Rajdhani',sans-serif;font-size:40px;font-weight:700;color:var(--purple)">PP</div>
+    <img src="1781098285976_image.png" alt="PurePVP Logo" class="logo-img"
+      onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='flex'">
+    <div class="logo-fallback">PP</div>
   </div>
   <h1 class="hero-title">PURE<span>PVP</span></h1>
   <p class="hero-sub">Strike PVP &nbsp;·&nbsp; Puremode &nbsp;·&nbsp; Fair Play</p>
@@ -440,72 +454,24 @@
       <p>Læs og forstå alle regler. Uvidenhed er ikke en undskyldning.</p>
     </div>
 
-    <!-- VIGTIGE REGLER -->
     <div class="rules-section">
       <div class="rules-section-title">⚠ Vigtige Regler</div>
-
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Religiøse fornærmelser</span>
-        <span class="rule-badge badge-ban">Permanent Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Scamming af andre spillere</span>
-        <span class="rule-badge badge-ban">Permanent Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">✅</span>
-        <span class="rule-text">Trash talk mænd imellem er tilladt</span>
-        <span class="rule-badge badge-allowed">Tilladt</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">⚠️</span>
-        <span class="rule-text">Trash talk mod kvinder — tilladt, men må ikke overskride ekstreme grænser</span>
-        <span class="rule-badge badge-allowed">Tilladt</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Racistisk trash talk — overskrid ikke grænser</span>
-        <span class="rule-badge badge-sanction">1 Uges Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Trusler om doxxing eller lækage af personlige oplysninger (Discord eller in-game)</span>
-        <span class="rule-badge badge-ban">Permanent Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Reklame for anden server (Discord eller in-game)</span>
-        <span class="rule-badge badge-ban">Permanent Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Reklame for cheats (Discord eller in-game)</span>
-        <span class="rule-badge badge-ban">Permanent Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Forsøg på RMT (salg af in-game items for rigtige penge)</span>
-        <span class="rule-badge badge-ban">Permanent Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Cheating / Aim Assist / Controller / Macros / Scripts</span>
-        <span class="rule-badge badge-ban">Permanent Ban</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Salg eller handel med VIP køretøjer for våben</span>
-        <span class="rule-badge badge-ban">Permanent Ban (begge)</span>
-      </div>
-
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Religiøse fornærmelser</span><span class="rule-badge badge-ban">Permanent Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Scamming af andre spillere</span><span class="rule-badge badge-ban">Permanent Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Trash talk mænd imellem er tilladt</span><span class="rule-badge badge-allowed">Tilladt</span></div>
+      <div class="rule-card"><span class="rule-icon">⚠️</span><span class="rule-text">Trash talk mod kvinder — tilladt, men må ikke overskride ekstreme grænser</span><span class="rule-badge badge-allowed">Tilladt</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Racistisk trash talk — overskrid ikke grænser</span><span class="rule-badge badge-sanction">1 Uges Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Trusler om doxxing eller lækage af personlige oplysninger (Discord eller in-game)</span><span class="rule-badge badge-ban">Permanent Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Reklame for anden server (Discord eller in-game)</span><span class="rule-badge badge-ban">Permanent Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Reklame for cheats (Discord eller in-game)</span><span class="rule-badge badge-ban">Permanent Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Forsøg på RMT (salg af in-game items for rigtige penge)</span><span class="rule-badge badge-ban">Permanent Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Cheating / Aim Assist / Controller / Macros / Scripts</span><span class="rule-badge badge-ban">Permanent Ban</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Salg eller handel med VIP køretøjer for våben</span><span class="rule-badge badge-ban">Permanent Ban (begge)</span></div>
       <div class="notice-box" style="margin-top:1rem">
         <strong>⏰ Vigtigt:</strong> Når spillere banes for cheat, TX eller AC, har de <strong>4 timer</strong> til at åbne en ticket. Åbnes der ikke ticket inden 4 timer, ophæves banen ikke.
       </div>
     </div>
 
-    <!-- PUREMODE -->
     <div class="rules-section">
       <div class="rules-section-title">🟣 PureMode Regler</div>
       <div class="two-col">
@@ -535,52 +501,20 @@
       </div>
     </div>
 
-    <!-- PRESS REGLER -->
     <div class="rules-section">
       <div class="rules-section-title">🔴 Press Regler</div>
-
-      <div class="rule-card">
-        <span class="rule-icon">⏱</span>
-        <span class="rule-text">Press → 30 sekunder til at droppe → Escape er tilladt → Efter 30 sek. er droppe obligatorisk (Press angribere skal droppe inden 10 sek. efter press starter)</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Når det pressede hold dropper, må ingen slutte sig til pressen — dette betragtes som press stacking</span>
-        <span class="rule-badge badge-sanction">Sanction</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Grøn / Rød / Hvid / Blå Zone — Forbudt under en press</span>
-        <span class="rule-badge badge-sanction">Sanction</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Ingen genoplivning, før PRESSEN er fuldt afsluttet</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Ingen PRESS tilladt ved slutningen af ZONES</span>
-        <span class="rule-badge badge-sanction">Sanction</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">✅</span>
-        <span class="rule-text">PRESS er tilladt på alle i et køretøj, selv spillere til fods</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Du kan ikke PRESS de samme spillere igen inden 5 minutter</span>
-      </div>
-      <div class="rule-card">
-        <span class="rule-icon">🚫</span>
-        <span class="rule-text">Ingen return efter død under en PRESS</span>
-        <span class="rule-badge badge-sanction">Sanction</span>
-      </div>
+      <div class="rule-card"><span class="rule-icon">⏱</span><span class="rule-text">Press → 30 sekunder til at droppe → Escape er tilladt → Efter 30 sek. er droppe obligatorisk (Press angribere skal droppe inden 10 sek. efter press starter)</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Når det pressede hold dropper, må ingen slutte sig til pressen — dette betragtes som press stacking</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Grøn / Rød / Hvid / Blå Zone — Forbudt under en press</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Ingen genoplivning, før PRESSEN er fuldt afsluttet</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Ingen PRESS tilladt ved slutningen af ZONES</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">PRESS er tilladt på alle i et køretøj, selv spillere til fods</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Du kan ikke PRESS de samme spillere igen inden 5 minutter</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Ingen return efter død under en PRESS</span><span class="rule-badge badge-sanction">Sanction</span></div>
     </div>
 
-    <!-- ZONE REGLER -->
     <div class="rules-section">
       <div class="rules-section-title">🗺 Zone Regler</div>
-
       <div class="zone-header"><div class="zone-dot dot-red"></div>RØD ZONE</div>
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning på person uden for zonen er forbudt</span><span class="rule-badge badge-sanction">Sanction</span></div>
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning eller handling uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
@@ -592,9 +526,7 @@
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Combatlog under/efter fight eller looting</span><span class="rule-badge badge-sanction">Sanction</span></div>
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Dræbe holdkammerater for at loote sikkert</span><span class="rule-badge badge-sanction">Sanction</span></div>
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Loote airdrop + din ven bærer dig, og I kører i en skudsikker bil</span><span class="rule-badge badge-ban">8t Ban + Fjern alt</span></div>
-
       <div class="divider"></div>
-
       <div class="zone-header"><div class="zone-dot dot-blue"></div>BLÅ ZONE</div>
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning på person uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Handling uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
@@ -606,7 +538,6 @@
       <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Dræbe holdkammerater for at loote sikkert</span><span class="rule-badge badge-sanction">Sanction</span></div>
     </div>
 
-    <!-- BLACKMARKET / FARM -->
     <div class="rules-section">
       <div class="rules-section-title">🖤 Blackmarket / Farm Zoner</div>
       <div class="rule-card"><span class="rule-icon">🔴</span><span class="rule-text">Coke Baggy (Sandy), Drug Dealer, Adrena (Stab City) → Samme regler som Rød Zone</span></div>
@@ -617,7 +548,6 @@
       </div>
     </div>
 
-    <!-- SQUAD REGLER -->
     <div class="rules-section">
       <div class="rules-section-title">👕 Squad / Teaming Regler</div>
       <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Alle skal have det <strong>samme tøj</strong> — samme trøje og bukser med samme farver. Accessories er valgfrit.</span></div>
@@ -627,7 +557,6 @@
       </div>
     </div>
 
-    <!-- LOOT -->
     <div class="rules-section">
       <div class="rules-section-title">💰 Loot Regler</div>
       <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Alt fundet i inventaret er tilladt at tage</span><span class="rule-badge badge-allowed">Tilladt</span></div>
@@ -636,13 +565,11 @@
       <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Random Looting er tilladt</span><span class="rule-badge badge-allowed">Tilladt</span></div>
     </div>
 
-    <!-- POV -->
     <div class="rules-section">
       <div class="rules-section-title">🎥 POV / Clips</div>
       <div class="rule-card"><span class="rule-icon">📹</span><span class="rule-text">Spillere skal poste clips med <strong>3–5 sekunder før drabet</strong> og <strong>3–5 sekunder efter drabet</strong></span></div>
     </div>
 
-    <!-- TOS -->
     <div class="rules-section">
       <div class="rules-section-title">📋 Handelsbetingelser (TOS)</div>
       <div class="notice-box">
@@ -654,7 +581,7 @@
   </div>
 </section>
 
-<!-- APPLICATION -->
+<!-- STAFF APPLICATION -->
 <section id="page-apply" class="page">
   <div class="page-inner" style="max-width:700px">
     <div class="page-header">
@@ -723,29 +650,48 @@
       </div>
 
       <button class="submit-btn" id="submit-btn" onclick="submitApplication()">
-        Send Ansøgning
+        📋 Send Ansøgning
       </button>
     </div>
   </div>
 </section>
 
-
+<!-- STREAMER APPLICATION -->
 <section id="page-streamer" class="page">
-<div class="page-inner" style="max-width:700px">
-<div class="page-header">
-<h1>STREAMER <span>ANSØGNING</span></h1>
-<p>Ansøg om officiel streamer rank på PurePVP.</p>
-</div>
-<div class="app-card">
-<label>Navn</label><input type="text" id="s-name">
-<label>Discord</label><input type="text" id="s-discord">
-<label>Alder</label><input type="number" id="s-age">
-<label>Kanal Link</label><input type="text" id="s-channel">
-<label>Følgere</label><input type="number" id="s-followers">
-<label>Gns. Seere</label><input type="number" id="s-viewers">
-<label>Hvorfor skal du være streamer?</label><textarea id="s-why"></textarea>
-<button class="submit-btn" onclick="submitStreamer()">🎥 Send Streamer Ansøgning</button>
-</div></div></section>
+  <div class="page-inner" style="max-width:700px">
+    <div class="page-header">
+      <h1>STREAMER <span>ANSØGNING</span></h1>
+      <p>Ansøg om officiel streamer rank på PurePVP.</p>
+    </div>
+    <div class="app-card">
+      <h2>Din Ansøgning</h2>
+      <p class="app-sub">Alle felter er påkrævet.</p>
+
+      <label>Navn / In-game navn</label>
+      <input type="text" id="s-name" placeholder="f.eks. PurePVP_Ghost">
+
+      <label>Discord tag</label>
+      <input type="text" id="s-discord" placeholder="f.eks. ghost#1337">
+
+      <label>Alder</label>
+      <input type="number" id="s-age" placeholder="Din alder" min="13" max="99">
+
+      <label>Kanal Link (Twitch / YouTube)</label>
+      <input type="text" id="s-channel" placeholder="https://twitch.tv/dinkanal">
+
+      <label>Antal Følgere</label>
+      <input type="number" id="s-followers" placeholder="f.eks. 500" min="0">
+
+      <label>Gennemsnitlige Seere pr. Stream</label>
+      <input type="number" id="s-viewers" placeholder="f.eks. 50" min="0">
+
+      <label>Hvorfor skal du være officiel PurePVP streamer?</label>
+      <textarea id="s-why" placeholder="Fortæl os hvad du kan bidrage med til serveren som streamer..."></textarea>
+
+      <button class="submit-btn" id="submit-streamer-btn" onclick="submitStreamer()">🎥 Send Streamer Ansøgning</button>
+    </div>
+  </div>
+</section>
 
 <footer>
   &copy; 2025 PurePVP &nbsp;·&nbsp; Strike PVP &nbsp;·&nbsp; Alle rettigheder forbeholdes
@@ -754,7 +700,7 @@
 <div id="toast"></div>
 
 <script>
-  const DISCORD_WEBHOOK = "https://discordapp.com/api/webhooks/1514268911451766975/6sGkArrMufG7QO24QQFwai0yEzwR1IQ8RvHDhIORz1TF_jp9Li9fIt99Um335wwXDWhz";
+  const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1514268911451766975/6sGkArrMufG7QO24QQFwai0yEzwR1IQ8RvHDhIORz1TF_jp9Li9fIt99Um335wwXDWhz";
 
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
@@ -763,7 +709,7 @@
     const btns = document.querySelectorAll('.nav-btn');
     const map = { home: 0, rules: 1, apply: 2, streamer: 3 };
     if (map[id] !== undefined) btns[map[id]].classList.add('active');
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
   function getRadioValue(name) {
@@ -771,25 +717,34 @@
     return el ? el.value : '';
   }
 
-  function showToast(msg, type='success') {
+  function showToast(msg, type = 'success') {
     const t = document.getElementById('toast');
     t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
     t.className = 'show ' + type;
-    setTimeout(() => t.className = '', 4000);
+    setTimeout(() => t.className = '', 5000);
+  }
+
+  async function sendToDiscord(embed) {
+    const res = await fetch(DISCORD_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ embeds: [embed] })
+    });
+    return res;
   }
 
   async function submitApplication() {
-    const name = document.getElementById('f-name').value.trim();
-    const discord = document.getElementById('f-discord').value.trim();
-    const age = document.getElementById('f-age').value.trim();
-    const time = document.getElementById('f-time').value;
-    const role = getRadioValue('role');
-    const exp = getRadioValue('exp');
-    const prev = document.getElementById('f-prev').value.trim();
-    const hours = document.getElementById('f-hours').value;
-    const why = document.getElementById('f-why').value.trim();
+    const name     = document.getElementById('f-name').value.trim();
+    const discord  = document.getElementById('f-discord').value.trim();
+    const age      = document.getElementById('f-age').value.trim();
+    const time     = document.getElementById('f-time').value;
+    const role     = getRadioValue('role');
+    const exp      = getRadioValue('exp');
+    const prev     = document.getElementById('f-prev').value.trim();
+    const hours    = document.getElementById('f-hours').value;
+    const why      = document.getElementById('f-why').value.trim();
     const scenario = document.getElementById('f-scenario').value.trim();
-    const rules = getRadioValue('rules');
+    const rules    = getRadioValue('rules');
 
     if (!name || !discord || !age || !time || !role || !exp || !hours || !why || !scenario || !rules) {
       showToast('Udfyld venligst alle påkrævede felter.', 'error');
@@ -808,63 +763,108 @@
       title: "📋 Ny Staff Ansøgning",
       color: 0x7B2FFF,
       fields: [
-        { name: "👤 Navn / In-game", value: name, inline: true },
-        { name: "💬 Discord", value: discord, inline: true },
-        { name: "🎂 Alder", value: age, inline: true },
-        { name: "⏱ Tid på serveren", value: time, inline: true },
-        { name: "🎯 Rolle søgt", value: role, inline: true },
-        { name: "📅 Timer pr. uge", value: hours, inline: true },
-        { name: "🏆 Tidligere erfaring", value: exp + (prev ? `: ${prev}` : ''), inline: false },
-        { name: "💡 Hvorfor staff?", value: why, inline: false },
-        { name: "⚖ Scenario svar", value: scenario, inline: false },
-        { name: "📚 Regler læst", value: rules, inline: true }
+        { name: "👤 Navn / In-game",      value: name,                              inline: true  },
+        { name: "💬 Discord",             value: discord,                           inline: true  },
+        { name: "🎂 Alder",               value: age,                               inline: true  },
+        { name: "⏱ Tid på serveren",      value: time,                              inline: true  },
+        { name: "🎯 Rolle søgt",           value: role,                              inline: true  },
+        { name: "📅 Timer pr. uge",        value: hours,                             inline: true  },
+        { name: "🏆 Tidligere erfaring",   value: exp + (prev ? `: ${prev}` : ''),  inline: false },
+        { name: "💡 Hvorfor staff?",       value: why,                               inline: false },
+        { name: "⚖ Scenario svar",         value: scenario,                          inline: false },
+        { name: "📚 Regler læst",          value: rules,                             inline: true  }
       ],
       footer: { text: "PurePVP Staff System" },
       timestamp: new Date().toISOString()
     };
 
     try {
-      if (DISCORD_WEBHOOK === "https://discordapp.com/api/webhooks/1514268911451766975/6sGkArrMufG7QO24QQFwai0yEzwR1IQ8RvHDhIORz1TF_jp9Li9fIt99Um335wwXDWhz") {
-        await new Promise(r => setTimeout(r, 1000));
-        showToast('Ansøgning modtaget! (Indsæt webhook URL for at sende til Discord)', 'success');
+      const res = await sendToDiscord(embed);
+      if (res.ok) {
+        showToast('Ansøgning sendt til Discord! Vi vender tilbage snarest.', 'success');
+        clearStaffForm();
       } else {
-        const res = await fetch(DISCORD_WEBHOOK, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    embeds: [embed]
-  })
-});
-        if (res.ok) {
-          showToast('Ansøgning sendt til Discord! Vi vender tilbage snarest.', 'success');
-          clearForm();
-        } else {
-          showToast('Fejl ved afsendelse. Prøv igen.', 'error');
-        }
+        const errText = await res.text();
+        console.error('Discord svar:', res.status, errText);
+        showToast('Fejl ved afsendelse (' + res.status + '). Prøv igen.', 'error');
       }
-    } catch(e) {
+    } catch (e) {
+      console.error('Netværksfejl:', e);
       showToast('Netværksfejl. Prøv igen.', 'error');
     }
 
     btn.disabled = false;
-    btn.textContent = 'Send Ansøgning';
+    btn.textContent = '📋 Send Ansøgning';
   }
 
-  function clearForm() {
+  function clearStaffForm() {
     ['f-name','f-discord','f-age','f-prev','f-why','f-scenario'].forEach(id => {
       document.getElementById(id).value = '';
     });
     ['f-time','f-hours'].forEach(id => {
       document.getElementById(id).selectedIndex = 0;
     });
-    document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+    document.querySelectorAll('#page-apply input[type=radio]').forEach(r => r.checked = false);
   }
 
-async function submitStreamer(){
-showToast('Streamer ansøgning sendt!');
-}
+  async function submitStreamer() {
+    const name      = document.getElementById('s-name').value.trim();
+    const discord   = document.getElementById('s-discord').value.trim();
+    const age       = document.getElementById('s-age').value.trim();
+    const channel   = document.getElementById('s-channel').value.trim();
+    const followers = document.getElementById('s-followers').value.trim();
+    const viewers   = document.getElementById('s-viewers').value.trim();
+    const why       = document.getElementById('s-why').value.trim();
+
+    if (!name || !discord || !age || !channel || !followers || !viewers || !why) {
+      showToast('Udfyld venligst alle påkrævede felter.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submit-streamer-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sender...';
+
+    const embed = {
+      title: "🎥 Ny Streamer Ansøgning",
+      color: 0x7B2FFF,
+      fields: [
+        { name: "👤 Navn / In-game",       value: name,      inline: true  },
+        { name: "💬 Discord",              value: discord,   inline: true  },
+        { name: "🎂 Alder",                value: age,       inline: true  },
+        { name: "🔗 Kanal Link",           value: channel,   inline: false },
+        { name: "👥 Følgere",              value: followers, inline: true  },
+        { name: "👁 Gns. Seere",           value: viewers,   inline: true  },
+        { name: "💡 Hvorfor streamer?",    value: why,       inline: false }
+      ],
+      footer: { text: "PurePVP Streamer System" },
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      const res = await sendToDiscord(embed);
+      if (res.ok) {
+        showToast('Streamer ansøgning sendt! Vi vender tilbage snarest.', 'success');
+        clearStreamerForm();
+      } else {
+        const errText = await res.text();
+        console.error('Discord svar:', res.status, errText);
+        showToast('Fejl ved afsendelse (' + res.status + '). Prøv igen.', 'error');
+      }
+    } catch (e) {
+      console.error('Netværksfejl:', e);
+      showToast('Netværksfejl. Prøv igen.', 'error');
+    }
+
+    btn.disabled = false;
+    btn.textContent = '🎥 Send Streamer Ansøgning';
+  }
+
+  function clearStreamerForm() {
+    ['s-name','s-discord','s-age','s-channel','s-followers','s-viewers','s-why'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+  }
 </script>
 </body>
 </html>
