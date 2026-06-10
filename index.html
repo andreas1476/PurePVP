@@ -739,10 +739,10 @@
       showToast('Du skal læse reglerne inden du ansøger.', 'error');
       return;
     }
-    if (
-  !DISCORD_WEBHOOK ||
-  DISCORD_WEBHOOK === "https://discordapp.com/api/webhooks/1514268911451766975/6sGkArrMufG7QO24QQFwai0yEzwR1IQ8RvHDhIORz1TF_jp9Li9fIt99Um335wwXDWhz"
-) {
+    if (!DISCORD_WEBHOOK) {
+  showToast('Webhook URL er ikke konfigureret endnu.', 'error');
+  return;
+}
   showToast('Webhook URL er ikke konfigureret endnu.', 'error');
   return;
 }
