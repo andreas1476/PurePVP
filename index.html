@@ -743,13 +743,10 @@
   showToast('Webhook URL er ikke konfigureret endnu.', 'error');
   return;
 }
-  showToast('Webhook URL er ikke konfigureret endnu.', 'error');
-  return;
-}
 
-    const btn = document.getElementById('submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Sender...';
+const btn = document.getElementById('submit-btn');
+btn.disabled = true;
+btn.textContent = 'Sender...';
 
     const embed = {
       title: "📋 Ny Staff Ansøgning",
