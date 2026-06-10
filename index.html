@@ -1,1 +1,842 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PurePVP</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --purple: #7B2FFF;
+    --purple-dark: #5A1FBB;
+    --purple-glow: rgba(123,47,255,0.35);
+    --purple-dim: rgba(123,47,255,0.12);
+    --bg: #0a0a0f;
+    --bg2: #0f0f1a;
+    --bg3: #141428;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --border: rgba(123,47,255,0.25);
+    --green: #22c55e;
+    --red: #ef4444;
+    --yellow: #facc15;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 22px; font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+  .nav-logo span { color: var(--purple); }
+
+  .nav-links { display: flex; gap: 8px; }
+
+  .nav-btn {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 14px; font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .nav-btn:hover { background: var(--purple-dim); border-color: var(--purple); color: #fff; }
+  .nav-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+
+  /* PAGES */
+  .page { display: none; padding-top: 64px; min-height: 100vh; }
+  .page.visible { display: block; }
+
+  /* HERO */
+  #page-home {
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 64px;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  #page-home.visible { display: flex; }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(123,47,255,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 30% at 20% 80%, rgba(90,31,187,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(var(--purple) 1px, transparent 1px),
+      linear-gradient(90deg, var(--purple) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .logo-container { position: relative; z-index: 2; margin-bottom: 2.5rem; }
+
+  .logo-img {
+    width: 240px; height: 240px;
+    border-radius: 20px;
+    box-shadow: 0 0 60px rgba(123,47,255,0.5), 0 0 120px rgba(123,47,255,0.2);
+    display: block;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(48px, 8vw, 90px);
+    font-weight: 700;
+    letter-spacing: 6px;
+    line-height: 1;
+    position: relative; z-index: 2;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(123,47,255,0.6);
+  }
+  .hero-title span { color: var(--purple); }
+
+  .hero-sub {
+    font-size: 16px; color: var(--muted);
+    margin: 1rem 0 2.5rem;
+    position: relative; z-index: 2;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .hero-actions { display: flex; gap: 12px; position: relative; z-index: 2; flex-wrap: wrap; justify-content: center; }
+
+  .btn-primary {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 15px; font-weight: 700;
+    padding: 14px 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    background: var(--purple);
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--purple-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(123,47,255,0.4); }
+
+  .btn-outline {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 15px; font-weight: 700;
+    padding: 14px 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid var(--purple);
+    background: transparent;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: var(--purple-dim); transform: translateY(-2px); }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative; z-index: 2;
+    margin-top: 3.5rem;
+    display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 32px; font-weight: 700; color: var(--purple);
+    line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  /* RULES PAGE */
+  .page-inner { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+
+  .page-header {
+    text-align: center; margin-bottom: 3rem;
+  }
+  .page-header h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 48px; font-weight: 700; letter-spacing: 4px;
+    color: #fff;
+  }
+  .page-header h1 span { color: var(--purple); }
+  .page-header p { color: var(--muted); font-size: 15px; margin-top: 0.5rem; }
+
+  .rules-section { margin-bottom: 2.5rem; }
+
+  .rules-section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--purple);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .rule-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color 0.2s;
+  }
+  .rule-card:hover { border-color: var(--purple); }
+
+  .rule-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .rule-text { font-size: 14px; color: var(--text); flex: 1; }
+  .rule-text strong { color: #fff; font-weight: 700; }
+  .rule-badge {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 4px;
+    text-transform: uppercase; flex-shrink: 0; align-self: center;
+  }
+  .badge-ban { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+  .badge-sanction { background: rgba(250,204,21,0.1); color: #fcd34d; border: 1px solid rgba(250,204,21,0.25); }
+  .badge-allowed { background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+
+  .notice-box {
+    background: rgba(123,47,255,0.08);
+    border: 1px solid rgba(123,47,255,0.3);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .notice-box strong { color: var(--purple); }
+
+  /* ALLOWED / FORBIDDEN GRID */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  .mini-section-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+  .mini-section-title.green { color: var(--green); }
+  .mini-section-title.red { color: var(--red); }
+
+  .mini-rule { font-size: 13px; color: var(--text); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px; }
+  .mini-rule:last-child { border-bottom: none; }
+
+  /* APPLICATION PAGE */
+  .app-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .app-card h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 24px; font-weight: 700;
+    color: #fff; letter-spacing: 2px;
+    margin-bottom: 0.25rem;
+  }
+
+  .app-card .app-sub { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+
+  label {
+    display: block;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    margin-top: 1.25rem;
+  }
+  label:first-of-type { margin-top: 0; }
+
+  input[type=text], input[type=number], select, textarea {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px rgba(123,47,255,0.15);
+  }
+
+  textarea { resize: vertical; min-height: 90px; }
+  select { cursor: pointer; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+  .radio-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .radio-opt {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+  .radio-opt input[type=radio] { accent-color: var(--purple); cursor: pointer; }
+  .radio-opt:has(input:checked) {
+    border-color: var(--purple);
+    background: var(--purple-dim);
+    color: #fff;
+  }
+
+  .submit-btn {
+    width: 100%; margin-top: 1.75rem;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    background: var(--purple);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .submit-btn:hover { background: var(--purple-dark); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(123,47,255,0.4); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* TOAST */
+  #toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 24px;
+    font-size: 15px; color: var(--text);
+    z-index: 999;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+    display: flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  #toast.show { opacity: 1; }
+  #toast.success { border-color: rgba(34,197,94,0.5); }
+  #toast.error { border-color: rgba(239,68,68,0.5); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px; color: var(--muted);
+    border-top: 1px solid var(--border);
+    letter-spacing: 1px;
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+  .zone-header {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .zone-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+  .dot-blue { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
+  .dot-green { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+  .dot-black { background: #888; box-shadow: 0 0 8px #888; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">PURE<span>PVP</span></div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('home')">Hjem</button>
+    <button class="nav-btn" onclick="showPage('rules')">Regler</button>
+    <button class="nav-btn" onclick="showPage('apply')">Staff Ansøgning</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<section id="page-home" class="page visible">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="logo-container">
+    <img src="/mnt/user-data/uploads/1781098285976_image.png" alt="PurePVP Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+    <div style="display:none; width:200px;height:200px;border-radius:20px;background:var(--purple-dim);border:2px solid var(--border);display:none;align-items:center;justify-content:center;margin:0 auto;font-family:'Rajdhani',sans-serif;font-size:40px;font-weight:700;color:var(--purple)">PP</div>
+  </div>
+  <h1 class="hero-title">PURE<span>PVP</span></h1>
+  <p class="hero-sub">Strike PVP &nbsp;·&nbsp; Puremode &nbsp;·&nbsp; Fair Play</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="showPage('rules')">Se Regler</button>
+    <button class="btn-outline" onclick="showPage('apply')">Bliv Staff</button>
+  </div>
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Legit Play</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Tolerance for cheats</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">Staff support</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">GTA V</div>
+      <div class="stat-label">Platform</div>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="page-rules" class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <h1>SERVER <span>REGLER</span></h1>
+      <p>Læs og forstå alle regler. Uvidenhed er ikke en undskyldning.</p>
+    </div>
+
+    <!-- VIGTIGE REGLER -->
+    <div class="rules-section">
+      <div class="rules-section-title">⚠ Vigtige Regler</div>
+
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Religiøse fornærmelser</span>
+        <span class="rule-badge badge-ban">Permanent Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Scamming af andre spillere</span>
+        <span class="rule-badge badge-ban">Permanent Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">✅</span>
+        <span class="rule-text">Trash talk mænd imellem er tilladt</span>
+        <span class="rule-badge badge-allowed">Tilladt</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">⚠️</span>
+        <span class="rule-text">Trash talk mod kvinder — tilladt, men må ikke overskride ekstreme grænser</span>
+        <span class="rule-badge badge-allowed">Tilladt</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Racistisk trash talk — overskrid ikke grænser</span>
+        <span class="rule-badge badge-sanction">1 Uges Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Trusler om doxxing eller lækage af personlige oplysninger (Discord eller in-game)</span>
+        <span class="rule-badge badge-ban">Permanent Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Reklame for anden server (Discord eller in-game)</span>
+        <span class="rule-badge badge-ban">Permanent Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Reklame for cheats (Discord eller in-game)</span>
+        <span class="rule-badge badge-ban">Permanent Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Forsøg på RMT (salg af in-game items for rigtige penge)</span>
+        <span class="rule-badge badge-ban">Permanent Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Cheating / Aim Assist / Controller / Macros / Scripts</span>
+        <span class="rule-badge badge-ban">Permanent Ban</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Salg eller handel med VIP køretøjer for våben</span>
+        <span class="rule-badge badge-ban">Permanent Ban (begge)</span>
+      </div>
+
+      <div class="notice-box" style="margin-top:1rem">
+        <strong>⏰ Vigtigt:</strong> Når spillere banes for cheat, TX eller AC, har de <strong>4 timer</strong> til at åbne en ticket. Åbnes der ikke ticket inden 4 timer, ophæves banen ikke.
+      </div>
+    </div>
+
+    <!-- PUREMODE -->
+    <div class="rules-section">
+      <div class="rules-section-title">🟣 PureMode Regler</div>
+      <div class="two-col">
+        <div>
+          <div class="mini-section-title green">✅ Tilladt</div>
+          <div class="mini-rule">✅ Legit Pack</div>
+          <div class="mini-rule">✅ Blood FX</div>
+          <div class="mini-rule">✅ Kill Effect</div>
+          <div class="mini-rule">✅ Non-abusive Tracers</div>
+        </div>
+        <div>
+          <div class="mini-section-title red">🚫 Forbudt</div>
+          <div class="mini-rule">🚫 Bush / Low Bush</div>
+          <div class="mini-rule">🚫 Props</div>
+          <div class="mini-rule">🚫 No Recoil</div>
+          <div class="mini-rule">🚫 No Window</div>
+          <div class="mini-rule">🚫 Kill Effects der afslører spillere</div>
+          <div class="mini-rule">🚫 Glowing Peds</div>
+          <div class="mini-rule">🚫 Straight Bullets</div>
+          <div class="mini-rule">🚫 No Roll</div>
+          <div class="mini-rule">🚫 POTATO MODS</div>
+          <div class="mini-rule">🚫 Enhver mod der giver fordel</div>
+        </div>
+      </div>
+      <div class="notice-box" style="margin-top:1rem">
+        <strong>🚫 Manglende overholdelse = Permanent Ban.</strong> Unban kræver betaling.
+      </div>
+    </div>
+
+    <!-- PRESS REGLER -->
+    <div class="rules-section">
+      <div class="rules-section-title">🔴 Press Regler</div>
+
+      <div class="rule-card">
+        <span class="rule-icon">⏱</span>
+        <span class="rule-text">Press → 30 sekunder til at droppe → Escape er tilladt → Efter 30 sek. er droppe obligatorisk (Press angribere skal droppe inden 10 sek. efter press starter)</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Når det pressede hold dropper, må ingen slutte sig til pressen — dette betragtes som press stacking</span>
+        <span class="rule-badge badge-sanction">Sanction</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Grøn / Rød / Hvid / Blå Zone — Forbudt under en press</span>
+        <span class="rule-badge badge-sanction">Sanction</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Ingen genoplivning, før PRESSEN er fuldt afsluttet</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Ingen PRESS tilladt ved slutningen af ZONES</span>
+        <span class="rule-badge badge-sanction">Sanction</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">✅</span>
+        <span class="rule-text">PRESS er tilladt på alle i et køretøj, selv spillere til fods</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Du kan ikke PRESS de samme spillere igen inden 5 minutter</span>
+      </div>
+      <div class="rule-card">
+        <span class="rule-icon">🚫</span>
+        <span class="rule-text">Ingen return efter død under en PRESS</span>
+        <span class="rule-badge badge-sanction">Sanction</span>
+      </div>
+    </div>
+
+    <!-- ZONE REGLER -->
+    <div class="rules-section">
+      <div class="rules-section-title">🗺 Zone Regler</div>
+
+      <div class="zone-header"><div class="zone-dot dot-red"></div>RØD ZONE</div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning på person uden for zonen er forbudt</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning eller handling uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Looting er tilladt inde i zonen</span><span class="rule-badge badge-allowed">Tilladt</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Flytte kroppen for at loote den uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Alle våben er tilladt i den røde zone</span><span class="rule-badge badge-allowed">Tilladt</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Ingen PRESS tilladt ved slutningen af rød zone</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning fra tage eller klatring via stiger / exploits</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Combatlog under/efter fight eller looting</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Dræbe holdkammerater for at loote sikkert</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Loote airdrop + din ven bærer dig, og I kører i en skudsikker bil</span><span class="rule-badge badge-ban">8t Ban + Fjern alt</span></div>
+
+      <div class="divider"></div>
+
+      <div class="zone-header"><div class="zone-dot dot-blue"></div>BLÅ ZONE</div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning på person uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Handling uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Flytte kroppen for at loote den uden for zonen</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Kun Pistol 50, Combat Pistol og Pistol Mk2 er tilladt</span><span class="rule-badge badge-allowed">Tilladt</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Ingen PRESS tilladt ved slutningen af blå zone</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Skydning fra tage eller klatring via stiger / exploits</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Combatlog under/efter fight eller looting</span><span class="rule-badge badge-sanction">Sanction</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Dræbe holdkammerater for at loote sikkert</span><span class="rule-badge badge-sanction">Sanction</span></div>
+    </div>
+
+    <!-- BLACKMARKET / FARM -->
+    <div class="rules-section">
+      <div class="rules-section-title">🖤 Blackmarket / Farm Zoner</div>
+      <div class="rule-card"><span class="rule-icon">🔴</span><span class="rule-text">Coke Baggy (Sandy), Drug Dealer, Adrena (Stab City) → Samme regler som Rød Zone</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Det er ikke tilladt at tage betaling fra folk på farmene</span><span class="rule-badge badge-ban">Forbudt</span></div>
+      <div class="rule-card"><span class="rule-icon">🔴</span><span class="rule-text">Våbenkøbszoner → Samme regler som Rød Zone</span></div>
+      <div class="notice-box" style="margin-top:1rem">
+        <strong>Black Market</strong> (ved Police Comico post — heavy weapon area): Kampe, looting og tyveri er alle tilladt.
+      </div>
+    </div>
+
+    <!-- SQUAD REGLER -->
+    <div class="rules-section">
+      <div class="rules-section-title">👕 Squad / Teaming Regler</div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Alle skal have det <strong>samme tøj</strong> — samme trøje og bukser med samme farver. Accessories er valgfrit.</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Er du i et crew, skal du også følge dette krav.</span></div>
+      <div class="notice-box" style="margin-top:1rem">
+        <strong>Dit ansvar:</strong> Sørg for at alle i dit squad har det samme tøj på.
+      </div>
+    </div>
+
+    <!-- LOOT -->
+    <div class="rules-section">
+      <div class="rules-section-title">💰 Loot Regler</div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Alt fundet i inventaret er tilladt at tage</span><span class="rule-badge badge-allowed">Tilladt</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Looting er kun tilladt direkte fra kroppen på jorden eller mens du bærer den</span></div>
+      <div class="rule-card"><span class="rule-icon">🚫</span><span class="rule-text">Looting mens du glitcher/clipper igennem et pansret køretøj er forbudt</span><span class="rule-badge badge-ban">Forbudt</span></div>
+      <div class="rule-card"><span class="rule-icon">✅</span><span class="rule-text">Random Looting er tilladt</span><span class="rule-badge badge-allowed">Tilladt</span></div>
+    </div>
+
+    <!-- POV -->
+    <div class="rules-section">
+      <div class="rules-section-title">🎥 POV / Clips</div>
+      <div class="rule-card"><span class="rule-icon">📹</span><span class="rule-text">Spillere skal poste clips med <strong>3–5 sekunder før drabet</strong> og <strong>3–5 sekunder efter drabet</strong></span></div>
+    </div>
+
+    <!-- TOS -->
+    <div class="rules-section">
+      <div class="rules-section-title">📋 Handelsbetingelser (TOS)</div>
+      <div class="notice-box">
+        <strong>Store køb:</strong> Alle køb fra VIP Store med rigtige penge er endelige og ikke-refunderbare. Der udstedes ingen refunderinger under nogen omstændigheder efter et køb er gennemført. Køb fra butikken er ikke obligatorisk.<br><br>
+        <strong>Ved at tilslutte dig serveren in-game bekræfter du automatisk, at du har læst, forstået og accepteret alle reglerne.</strong>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- APPLICATION -->
+<section id="page-apply" class="page">
+  <div class="page-inner" style="max-width:700px">
+    <div class="page-header">
+      <h1>STAFF <span>ANSØGNING</span></h1>
+      <p>Udfyld formularen nedenfor. Vi sender dig besked via Discord.</p>
+    </div>
+
+    <div class="app-card">
+      <h2>Din Ansøgning</h2>
+      <p class="app-sub">Alle felter er påkrævet medmindre andet er angivet.</p>
+
+      <label>Dit navn / in-game navn</label>
+      <input type="text" id="f-name" placeholder="f.eks. PurePVP_Ghost">
+
+      <label>Discord tag</label>
+      <input type="text" id="f-discord" placeholder="f.eks. ghost#1337">
+
+      <label>Alder</label>
+      <input type="number" id="f-age" placeholder="Din alder" min="13" max="99">
+
+      <label>Hvor lang tid har du spillet på serveren?</label>
+      <select id="f-time">
+        <option value="">Vælg...</option>
+        <option>Mindre end 1 måned</option>
+        <option>1–3 måneder</option>
+        <option>3–6 måneder</option>
+        <option>Mere end 6 måneder</option>
+      </select>
+
+      <label>Hvilken staff rolle søger du?</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="role" value="Moderator"> Moderator</label>
+        <label class="radio-opt"><input type="radio" name="role" value="Support"> Support</label>
+        <label class="radio-opt"><input type="radio" name="role" value="Admin"> Admin</label>
+        <label class="radio-opt"><input type="radio" name="role" value="Event Staff"> Event Staff</label>
+      </div>
+
+      <label>Har du tidligere staff erfaring?</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="exp" value="Ja"> Ja</label>
+        <label class="radio-opt"><input type="radio" name="exp" value="Nej"> Nej</label>
+      </div>
+
+      <label>Beskriv din tidligere erfaring (valgfrit)</label>
+      <textarea id="f-prev" placeholder="Beskriv din tidligere staff erfaring, hvilke servere, roller osv."></textarea>
+
+      <label>Hvor mange timer om ugen kan du bruge på serveren?</label>
+      <select id="f-hours">
+        <option value="">Vælg...</option>
+        <option>1–5 timer</option>
+        <option>5–10 timer</option>
+        <option>10–20 timer</option>
+        <option>Mere end 20 timer</option>
+      </select>
+
+      <label>Hvorfor vil du være staff på PurePVP?</label>
+      <textarea id="f-why" placeholder="Fortæl os hvorfor du vil være staff og hvad du kan bidrage med..."></textarea>
+
+      <label>Hvad ville du gøre hvis en spiller bryder reglerne?</label>
+      <textarea id="f-scenario" placeholder="Beskriv din fremgangsmåde..."></textarea>
+
+      <label>Har du læst og forstået alle serverregler?</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="rules" value="Ja"> Ja, jeg har læst alle regler</label>
+        <label class="radio-opt"><input type="radio" name="rules" value="Nej"> Nej, ikke endnu</label>
+      </div>
+
+      <button class="submit-btn" id="submit-btn" onclick="submitApplication()">
+        Send Ansøgning
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 PurePVP &nbsp;·&nbsp; Strike PVP &nbsp;·&nbsp; Alle rettigheder forbeholdes
+</footer>
+
+<div id="toast"></div>
+
+<script>
+  const DISCORD_WEBHOOK = "DIN_DISCORD_WEBHOOK_URL_HER";
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('visible');
+    const btns = document.querySelectorAll('.nav-btn');
+    const map = { home: 0, rules: 1, apply: 2 };
+    if (map[id] !== undefined) btns[map[id]].classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function getRadioValue(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  }
+
+  function showToast(msg, type='success') {
+    const t = document.getElementById('toast');
+    t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
+    t.className = 'show ' + type;
+    setTimeout(() => t.className = '', 4000);
+  }
+
+  async function submitApplication() {
+    const name = document.getElementById('f-name').value.trim();
+    const discord = document.getElementById('f-discord').value.trim();
+    const age = document.getElementById('f-age').value.trim();
+    const time = document.getElementById('f-time').value;
+    const role = getRadioValue('role');
+    const exp = getRadioValue('exp');
+    const prev = document.getElementById('f-prev').value.trim();
+    const hours = document.getElementById('f-hours').value;
+    const why = document.getElementById('f-why').value.trim();
+    const scenario = document.getElementById('f-scenario').value.trim();
+    const rules = getRadioValue('rules');
+
+    if (!name || !discord || !age || !time || !role || !exp || !hours || !why || !scenario || !rules) {
+      showToast('Udfyld venligst alle påkrævede felter.', 'error');
+      return;
+    }
+    if (rules === 'Nej') {
+      showToast('Du skal læse reglerne inden du ansøger.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sender...';
+
+    const embed = {
+      title: "📋 Ny Staff Ansøgning",
+      color: 0x7B2FFF,
+      fields: [
+        { name: "👤 Navn / In-game", value: name, inline: true },
+        { name: "💬 Discord", value: discord, inline: true },
+        { name: "🎂 Alder", value: age, inline: true },
+        { name: "⏱ Tid på serveren", value: time, inline: true },
+        { name: "🎯 Rolle søgt", value: role, inline: true },
+        { name: "📅 Timer pr. uge", value: hours, inline: true },
+        { name: "🏆 Tidligere erfaring", value: exp + (prev ? `: ${prev}` : ''), inline: false },
+        { name: "💡 Hvorfor staff?", value: why, inline: false },
+        { name: "⚖ Scenario svar", value: scenario, inline: false },
+        { name: "📚 Regler læst", value: rules, inline: true }
+      ],
+      footer: { text: "PurePVP Staff System" },
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      if (DISCORD_WEBHOOK === "DIN_DISCORD_WEBHOOK_URL_HER") {
+        await new Promise(r => setTimeout(r, 1000));
+        showToast('Ansøgning modtaget! (Indsæt webhook URL for at sende til Discord)', 'success');
+      } else {
+        const res = await fetch(DISCORD_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ embeds: [embed] })
+        });
+        if (res.ok) {
+          showToast('Ansøgning sendt til Discord! Vi vender tilbage snarest.', 'success');
+          clearForm();
+        } else {
+          showToast('Fejl ved afsendelse. Prøv igen.', 'error');
+        }
+      }
+    } catch(e) {
+      showToast('Netværksfejl. Prøv igen.', 'error');
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send Ansøgning';
+  }
+
+  function clearForm() {
+    ['f-name','f-discord','f-age','f-prev','f-why','f-scenario'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    ['f-time','f-hours'].forEach(id => {
+      document.getElementById(id).selectedIndex = 0;
+    });
+    document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  }
+</script>
+</body>
+</html>
